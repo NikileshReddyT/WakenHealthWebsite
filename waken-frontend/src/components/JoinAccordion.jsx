@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Disclosure, Transition } from '@headlessui/react';
 import { FiChevronDown } from 'react-icons/fi';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import JoinForm from './JoinForm';
 
 const jobRoles = [
@@ -14,12 +13,23 @@ const jobRoles = [
 const JoinAccordion = () => {
   const [openFormRoleId, setOpenFormRoleId] = useState(null);
 
-  const handleApplyClick = (roleId, currentOpenState) => {
-    if (currentOpenState && openFormRoleId === roleId) {
-        setOpenFormRoleId(null);
-    } else {
-       setOpenFormRoleId(roleId);
-    }
+  const toggleAccordion = (roleId) => {
+      setOpenFormRoleId(prevId => (prevId === roleId ? null : roleId));
+  };
+  
+  const panelVariants = {
+      hidden: {
+          opacity: 0,
+          height: 0,
+          y: -10,
+          transition: { duration: 0.3, ease: "easeOut" }
+      },
+      visible: {
+          opacity: 1,
+          height: 'auto',
+          y: 0,
+          transition: { duration: 0.4, ease: "easeOut" }
+      }
   };
 
   return (
@@ -44,34 +54,37 @@ const JoinAccordion = () => {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="bg-white rounded-lg shadow-md">
                  <button 
-                   onClick={() => handleApplyClick(role.id, openFormRoleId === role.id)} 
+                   onClick={() => toggleAccordion(role.id)}
                    className="flex justify-between items-center w-full px-6 py-4 text-left text-lg font-medium text-primary hover:bg-blue-50 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75 transition duration-150 ease-in-out"
                   >
                     <span>{role.title}</span>
                     <FiChevronDown
                       className={`${openFormRoleId === role.id ? 'transform rotate-180' : ''
-                        } w-5 h-5 text-primary transition-transform duration-200`}
+                        } w-5 h-5 text-primary transition-transform duration-300 ease-out`}
                     />
                   </button>
                 
-                  <Transition
-                      show={openFormRoleId === role.id}
-                      enter="transition-[max-height] duration-500 ease-in-out overflow-hidden"
-                      enterFrom="max-h-0 opacity-0"
-                      enterTo="max-h-[1000px] opacity-100"
-                      leave="transition-[max-height] duration-300 ease-in-out overflow-hidden"
-                      leaveFrom="max-h-[1000px] opacity-100"
-                      leaveTo="max-h-0 opacity-0"
-                    >
-                      <div className="px-6 pt-4 pb-6 border-t border-gray-100">
-                         <JoinForm 
-                            selectedPosition={role.title} 
-                            isInline={true}
-                         /> 
-                      </div>
-                    </Transition>
+                  <AnimatePresence initial={false}> 
+                    {openFormRoleId === role.id && (
+                      <motion.div
+                         key="content"
+                         variants={panelVariants}
+                         initial="hidden"
+                         animate="visible"
+                         exit="hidden"
+                         style={{ overflow: 'hidden' }}
+                      >
+                        <div className="px-6 pt-4 pb-6 border-t border-gray-100">
+                           <JoinForm 
+                              selectedPosition={role.title} 
+                              isInline={true}
+                           /> 
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
               </div>
             </motion.div>
           ))}

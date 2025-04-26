@@ -69,4 +69,20 @@
 
 /* Removed rotation utilities as animation is now handled by JS */
 
+/* Custom Utilities for Vita Section Icon Rotation (Reverted to CSS) */
+@layer utilities {
+  @keyframes rotate-around {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg); 
+    }
+  }
+
+  .animate-rotate-around {
+    animation: rotate-around 20s linear infinite; /* Adjust duration for speed */
+  }
+}
+
 

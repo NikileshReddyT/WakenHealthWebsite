@@ -106,14 +106,16 @@ const ContactSection = () => {
                         </div>
                         {errors.privacy && <p className="text-red-400 text-xs -mt-4">{errors.privacy}</p>}
                         
-                        <motion.button 
-                            type="submit"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="w-full md:w-auto px-10 py-3 bg-secondary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 focus:ring-primary transition-colors duration-300 font-semibold shadow-md mt-2"
-                        >
-                            Send Message
-                        </motion.button>
+                        <div className="pt-4 text-center"> 
+                            <motion.button 
+                                type="submit"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="px-10 py-3 bg-secondary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 focus:ring-primary transition-colors duration-300 font-semibold shadow-md"
+                            >
+                                Send Message
+                            </motion.button>
+                        </div>
                     </form>
                 </motion.div>
             </div>

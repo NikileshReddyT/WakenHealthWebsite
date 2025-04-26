@@ -1,106 +1,117 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiCheckCircle } from 'react-icons/fi';
-import NeuralBloomGraphic from './NeuralBloomGraphic'; // Import the graphic
+
+// Define constants for reusable styles or values if needed
 
 const HeroSection = () => {
 
-  // Animation Variants
-  const textAppear = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-        opacity: 1, 
-        y: 0, 
-        transition: { duration: 0.8, ease: 'easeOut', delay: 0.5 } 
+  // Simple fade-in variant for sequencing
+  const fadeIn = (delay = 0) => ({
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.6, delay: delay, ease: 'easeOut' }
     }
-  };
-  
-  const taglineItem = {
-      hidden: { opacity: 0, x: -20 },
-      visible: { opacity: 1, x: 0 }
-  };
+  });
 
   return (
     <section 
       id="hero" 
-      // Dark gradient background
-      className="relative min-h-screen flex items-center justify-center 
-                 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 
-                 pt-24 pb-20 md:pb-32 overflow-hidden text-white"
+      className="relative min-h-screen flex items-center bg-gradient-to-b from-blue-50 via-blue-100 to-white pt-24 pb-20 md:pb-36 overflow-hidden"
     >
-      {/* Background Graphic Container */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 opacity-40 md:opacity-30">
-          <div className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] lg:w-[800px] lg:h-[800px]">
-             <NeuralBloomGraphic />
-          </div>
-      </div>
-
-      {/* Text Content Container - Centered */} 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-            
-            {/* Headline */}
-            <motion.h1 
-                variants={textAppear}
-                initial="hidden"
-                animate="visible"
-                className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight drop-shadow-md"
-            >
-                Waken Health
-            </motion.h1>
-            
-            {/* Tagline Section */}
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+          
+          {/* --- Left Side: Text Content --- */}
+          <motion.div 
+            className="space-y-6 flex flex-col justify-center h-full" 
+            variants={fadeIn(0.2)}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Container for top text (Headline, Subtitles) */}
+            <div> 
+                <motion.h1 
+                    variants={fadeIn(0.6)}
+                    className="text-4xl w-full mx-auto text-center sm:text-5xl md:text-6xl font-extrabold text-neutral-900 leading-tight"
+                >
+                    Waken Health
+                </motion.h1>
+                <motion.p 
+                    variants={fadeIn(0.4)}
+                    className="text-primary font-medium text-sm tracking-wide mb-1 w-full text-center mx-auto"
+                >
+                    By Vital Health Solutions
+                </motion.p>
+                 <motion.p 
+                    variants={fadeIn(0.8)}
+                    className="text-lg md:text-xl text-neutral-600 mt-4 text-center"
+                 >
+                    Your personalized AI health companion for a better life.
+                 </motion.p>
+            </div>
+
+            {/* Static Benefit List (Now vertically centered between top text and button) */}
             <motion.div 
-              variants={textAppear} // Use same appear animation for the block
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: 0.7 }} // Delay the whole block slightly
+                variants={fadeIn(1.0)} 
+                className="space-y-3 py-4 flex flex-col items-center"
             >
-                <p className="text-lg md:text-xl text-blue-200 mb-8 drop-shadow-sm">
+                <p className="text-lg md:text-xl font-semibold text-neutral-800 mb-3">
                     Wake Up:
                 </p>
-                {/* Using inline-flex for horizontal layout on medium screens */}
-                <motion.div 
-                    className="flex flex-col md:flex-row md:justify-center space-y-3 md:space-y-0 md:space-x-8 mb-10"
-                    initial="hidden"
-                    animate="visible"
-                    transition={{ staggerChildren: 0.2, delayChildren: 1.0 }} // Stagger individual items
+                <div className="space-y-2 pl-2"> 
+                    <div className="flex items-center text-neutral-700">
+                        <FiCheckCircle className="text-secondary mr-3 flex-shrink-0" size={20}/>
+                        <span>Wake Up Physically</span>
+                    </div>
+                    <div className="flex items-center text-neutral-700">
+                        <FiCheckCircle className="text-secondary mr-3 flex-shrink-0" size={20}/>
+                        <span>Wake Up Mentally</span>
+                    </div>
+                    <div className="flex items-center text-neutral-700">
+                        <FiCheckCircle className="text-secondary mr-3 flex-shrink-0" size={20}/>
+                        <span>Wake Up Nutritionally</span>
+                    </div>
+                </div>
+            {/* CTA Button Container */}
+             <motion.div variants={fadeIn(1.2)}> 
+                 <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0px 8px 20px rgba(59, 130, 246, 0.3)" }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-8 my-4 rounded-lg shadow-md transition duration-300 ease-in-out"
                 >
-                    <motion.div variants={taglineItem} className="flex items-center justify-center md:justify-start text-blue-100">
-                        <FiCheckCircle className="text-blue-300 mr-2 flex-shrink-0" size={18}/>
-                        <span className="text-sm md:text-base">Physically</span>
-                    </motion.div>
-                    <motion.div variants={taglineItem} className="flex items-center justify-center md:justify-start text-blue-100">
-                        <FiCheckCircle className="text-blue-300 mr-2 flex-shrink-0" size={18}/>
-                        <span className="text-sm md:text-base">Mentally</span>
-                    </motion.div>
-                    <motion.div variants={taglineItem} className="flex items-center justify-center md:justify-start text-blue-100">
-                        <FiCheckCircle className="text-blue-300 mr-2 flex-shrink-0" size={18}/>
-                        <span className="text-sm md:text-base">Nutritionally</span>
-                    </motion.div>
-                </motion.div>
+                    Get Started
+                </motion.button>
+             </motion.div>
             </motion.div>
 
-            {/* Ghost Button CTA */}
-             <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-                whileHover={{ 
-                    scale: 1.05,
-                    backgroundColor: "rgba(59, 130, 246, 0.1)", // Faint blue background on hover
-                    boxShadow: "0 0 15px rgba(59, 130, 246, 0.3)" 
-                }}
-                className="border border-blue-300 hover:border-blue-400 text-blue-100 font-semibold py-3 px-8 rounded-lg 
-                           transition duration-300 ease-in-out shadow-sm hover:shadow-blue-400/30"
-            >
-                Explore Features
-            </motion.button>
 
+          </motion.div>
+
+          {/* --- Right Side: Phone Mockup Placeholder --- */}
+          <motion.div 
+             variants={fadeIn(0.5)} // Fade in the mockup area
+             initial="hidden"
+             animate="visible"
+             className="relative flex justify-center items-center mt-12 md:mt-0"
+           >
+            {/* Phone Frame */}
+            <div className="relative w-[280px] h-[570px] md:w-[300px] md:h-[610px] bg-gray-800 rounded-[45px] shadow-2xl border-[8px] border-gray-900 p-2">
+                 {/* Inner Bezel/Screen Area */}
+                <div className="w-full h-full bg-white rounded-[35px] overflow-hidden flex items-center justify-center">
+                    {/* Placeholder for App Screenshot */}
+                    <p className="text-sm text-gray-400 px-4 text-center">Your App Screenshot Goes Here</p>
+                </div>
+                {/* Notch */}
+                 <div className="absolute top-[12px] left-1/2 -translate-x-1/2 w-[100px] h-[20px] bg-gray-800 rounded-b-xl z-10 border-x-[4px] border-b-[4px] border-gray-900"></div>
+                 {/* Side Button Indent */}
+                 <div className="absolute left-[-6px] top-[100px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
+            </div>
+          </motion.div>
         </div>
       </div>
       
-      {/* Bottom Wave Transition - Fill needs to match Features section (light gray) */}
+      {/* Bottom Wave Transition */}
       <div className="absolute bottom-0 left-0 w-full z-20 pointer-events-none" style={{ marginBottom: '-1px'}}>
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block w-full h-auto">
           <path d="M0,50 C400,120 1000,-20 1440,50 L1440,100 L0,100 Z" fill="#F3F4F6"></path> {/* Fill = bg-gray-100 approx */}

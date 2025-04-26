@@ -21,7 +21,7 @@ const featuresRow2Data = [
   { id: 'f12', icon: FiTarget, title: 'Challenge Friends', description: 'Engage in friendly competitions.' },
 ];
 
-// Feature Card - Made narrower
+// Feature Card - Responsive width
 const FeatureCard = ({ featureId, data }) => {
   const feature = data.find(f => f.id === featureId);
   if (!feature) return null;
@@ -29,9 +29,13 @@ const FeatureCard = ({ featureId, data }) => {
 
   return (
     <motion.div
-      className={`bg-white rounded-lg border border-blue-100 p-4 flex-shrink-0 flex flex-col items-center text-center mx-2 w-[calc(14%-1rem)] h-40 cursor-default`}
+      // Base width for mobile (approx 2.2 cards visible), narrower width for medium screens up (6 cards)
+      className={`bg-white rounded-lg border border-blue-100 py-4 px-6 flex-shrink-0 flex flex-col items-center text-center mx-2 w-[30%] md:w-[calc(14%-1rem)] h-40 cursor-default`}
     >
-      <IconComponent className="text-primary mb-2.5" size={28} />
+      {/* Wrapper div to give icon fixed dimensions and prevent squashing */}
+      <div className="w-8 h-8 mb-2.5 flex items-center justify-center flex-shrink-0">
+         <IconComponent className="text-primary" size={28} />
+      </div>
       <h4 className="font-semibold text-sm text-neutral-800 mb-1.5">{title}</h4>
       <p className="text-xs text-neutral-500 leading-snug">{description}</p>
     </motion.div>

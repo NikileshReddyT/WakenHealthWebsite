@@ -92,23 +92,34 @@ const VitaSection = () => {
           {/* <h3 className="text-6xl md:text-7xl font-extrabold text-primary">VITA.</h3> */}
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* Left Side - VITA Blocks */}
+        <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* Left Side - VITA Blocks (Now appears second on mobile) */}
           <motion.div 
             variants={textVariants} 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="space-y-4"
+            className="space-y-4 w-full"
           >
-            {vitaItems.map((item, index) => (
-              <div key={index} className="bg-white p-5 rounded-lg shadow-md border border-gray-100 flex items-center">
-                  {/* Content can be added inside block if needed */}
-                  <span className="font-semibold text-lg text-neutral-700">{item.letter} - {item.title}</span>
-              </div>
-            ))}
-             {/* Learn More button removed from left side based on image */}
-             {/* <motion.button ...>Learn More</motion.button> */}
+            {vitaItems.map((item, index) => {
+                const { letter, title, icon: Icon } = item;
+                return (
+                  <div 
+                    key={index} 
+                    className="relative w-full bg-white p-4 rounded-lg shadow-md border border-blue-100 overflow-hidden"
+                    >
+                      {/* Large Blurred Icon Background */}
+                      <div className="absolute inset-0 flex items-center justify-center z-0 opacity-30 blur-xl pointer-events-none"> 
+                          <Icon className="text-blue-100" size={80} /> 
+                      </div>
+                      {/* Content - Centered */}
+                       <div className="relative z-10 flex flex-row justify-center md:flex-col items-center text-center space-x-2 md:space-x-0 md:space-y-1">
+                           <Icon className="text-primary" size={24} />
+                           <span className="font-semibold text-base md:text-lg text-neutral-800">{title}</span>
+                       </div>
+                  </div>
+                )
+            })}
           </motion.div>
 
           {/* Right Side - Concentric Circles Graphic - Container is STATIONARY */}
@@ -119,10 +130,21 @@ const VitaSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="relative flex items-center justify-center w-full max-w-sm mx-auto aspect-square" 
           >
-            {/* Background Circles (Stationary) */}
-            <div className="absolute inset-0 rounded-full bg-blue-100 opacity-50"></div>
-            <div className="absolute inset-[12%] rounded-full bg-blue-200 opacity-60"></div>
-            <div className="absolute inset-[25%] rounded-full bg-secondary flex items-center justify-center shadow-lg">
+            {/* Background Circles (Stationary) - Variation with Cyan */}
+            {/* Outermost - Light blue fade, slightly increased opacity */}
+            <div 
+                className="absolute inset-0 rounded-full opacity-70" 
+                style={{ background: 'radial-gradient(circle, rgba(219, 234, 254, 1) 70%, transparent 90%)' }} 
+            ></div> 
+            {/* Middle - Cyan fade */} 
+            <div 
+                className="absolute inset-[12%] rounded-full opacity-60" 
+                style={{ background: 'radial-gradient(circle, rgba(34, 211, 238, 1) 50%, transparent 80%)' }}
+            ></div> 
+            {/* Innermost - Keep dark blue as set by user */}
+            <div 
+                className="absolute inset-[25%] rounded-full bg-secondary flex items-center justify-center shadow-lg"
+            >
                  <h3 className="text-4xl sm:text-5xl font-bold text-white">VITA</h3>
             </div>
             
