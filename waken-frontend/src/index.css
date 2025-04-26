@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind 4 Theme Configuration using CSS Variables */
+@layer base {
+  :root {
+    /* Colors */
+    --color-primary: #1E3A8A; /* Indigo-900 */
+    --color-secondary: #3B82F6; /* Blue-500 */
+    --color-accent: #FBBF24; /* Yellow-400 */
+    --color-neutral-100: #F3F4F6;
+    --color-neutral-900: #111827;
+
+    /* Font */
+    --font-family-sans: 'Inter', sans-serif;
+
+    /* Default Transition (Applied via utility classes like duration-300, ease-in-out) */
+  }
+
+  body {
+    font-family: var(--font-family-sans);
+    @apply antialiased bg-white text-neutral-900;
+  }
+
+  /* Apply custom colors to Tailwind classes */
+  .text-primary { color: var(--color-primary); }
+  .bg-primary { background-color: var(--color-primary); }
+  .border-primary { border-color: var(--color-primary); }
+  .ring-primary { --tw-ring-color: var(--color-primary); }
+
+  .text-secondary { color: var(--color-secondary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+
+  .text-accent { color: var(--color-accent); }
+  .bg-accent { background-color: var(--color-accent); }
+
+  .text-neutral-100 { color: var(--color-neutral-100); }
+  .bg-neutral-100 { background-color: var(--color-neutral-100); }
+
+  .text-neutral-900 { color: var(--color-neutral-900); }
+  .bg-neutral-900 { background-color: var(--color-neutral-900); }
+}
+
+/* Custom Utilities for Carousel */
+@layer utilities {
+  @keyframes scroll-left {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); } /* Moves one full set of items left */
+  }
+
+  @keyframes scroll-right {
+    0% { transform: translateX(-100%); } /* Start from the duplicate set */
+    100% { transform: translateX(0%); }   /* Move back to original */
+  }
+
+  .animate-scroll-left {
+    /* Adjust duration and timing function as needed */
+    animation: scroll-left 60s linear infinite; 
+  }
+
+  .animate-scroll-right {
+     /* Adjust duration and timing function as needed */
+    animation: scroll-right 60s linear infinite;
+  }
+}
+
+/* Removed rotation utilities as animation is now handled by JS */
+
+
